@@ -3,7 +3,7 @@
 const Trip = require('../models/tripModel');
 
 const trip_index = (req, res) => {
-    Trip.find().sort({ createdAt: 1 })
+    Trip.find().sort({ lastEdited: -1 }) 
     .then((result) => {
         res.json({ trips: result });
     })
@@ -49,7 +49,12 @@ const trip_delete = (req, res) => {
 
 const trip_update = (req, res) => {
     const id = req.params.id;
-    Trip.findByIdAndUpdate(id, req.body, { new: true })
+    const updatedData = {
+        ...req.body,
+        lastEdited: new Date(), 
+    };
+
+    Trip.findByIdAndUpdate(id, updatedData, { new: true })
         .then((result) => {
             res.json({ trip: result });
         })
@@ -57,6 +62,7 @@ const trip_update = (req, res) => {
             console.log(err);
         });
 }
+
 
 module.exports = {
     trip_index,
