@@ -4,10 +4,14 @@ const bcrypt = require('bcrypt');
 
 // Define schema for user registration and login
 const userSchema = new Schema({
-  username: {
+  firstName: { // Add firstName field
     type: String,
     required: true,
-    unique: true,
+    trim: true,
+  },
+  lastName: { // Add lastName field
+    type: String,
+    required: true,
     trim: true,
   },
   email: {
