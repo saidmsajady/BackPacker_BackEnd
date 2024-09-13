@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const connectToDb = require('./config/dbConnect');
 const tripRoutes = require('./routes/tripRoutes');
+const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 // Initialize Express app
 const app = express();
@@ -21,6 +22,9 @@ connectToDb()
     });
   })
   .catch(err => console.error(err));
+
+// User routes (signup/login)
+app.use('/auth', userRoutes);  // Moved this above 404 handler
 
 // Trip routes
 app.use('/trips', tripRoutes);
