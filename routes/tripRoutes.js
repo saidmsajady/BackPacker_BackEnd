@@ -4,9 +4,9 @@ const authenticate = require('../middleware/authMiddleware'); // JWT auth middle
 
 const router = express.Router();
 
-router.get('/', tripController.trip_index); // Public route for listing trips
+router.get('/', authenticate, tripController.trip_index); // Protect this route to only fetch trips for the logged-in user
 router.post('/', authenticate, tripController.trip_create_post); // Protected route for creating trips
-router.get('/:id', tripController.trip_details); // Public route for viewing a trip
+router.get('/:id', authenticate, tripController.trip_details); // Protect viewing individual trip details
 router.put('/:id', authenticate, tripController.trip_update); // Protected route for updating trips
 router.delete('/:id', authenticate, tripController.trip_delete); // Protected route for deleting trips
 

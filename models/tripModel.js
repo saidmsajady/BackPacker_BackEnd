@@ -1,38 +1,38 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define schema for trip details
 const tripSchema = new Schema({
   title: {
     type: String,
-    required: true, // Trip must have a title
+    required: true,
   },
   countries: [
     {
       country: {
         type: String,
-        required: true, // Each country in the trip is required
+        required: true,
       },
       startDate: {
         type: Date,
-        required: true, // Start date for the country is required
+        required: true,
       },
       endDate: {
         type: Date,
-        required: true, // End date for the country is required
+        required: true,
       }
     }
   ],
   lastEdited: {
     type: Date,
-    default: Date.now, // Automatically set to the current date
+    default: Date.now,
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId, // Reference to the User model
+    ref: 'User',
+    required: true,
   }
-}, { 
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
-    collection: 'tripsDetails' // Collection name in MongoDB
-});
+}, { timestamps: true, collection: 'tripsDetails' });
 
-// Create the model based on the schema
-const Trip = mongoose.model('trip', tripSchema);
+const Trip = mongoose.model('Trip', tripSchema);
 
 module.exports = Trip;
