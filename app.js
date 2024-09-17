@@ -23,12 +23,11 @@ connectToDb()
   })
   .catch(err => console.error(err));
 
-  const corsOptions = {
-    origin: 'https://exploremate-site.web.app', // Update with your actual frontend URL
+  app.use(cors({
+    origin: 'https://exploremate-site.web.app', 
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
-  };
-  app.use(cors(corsOptions));
+  }));
 
 // User routes (signup/login)
 app.use('/auth', userRoutes);  // Moved this above 404 handler
