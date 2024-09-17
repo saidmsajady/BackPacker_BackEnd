@@ -23,6 +23,13 @@ connectToDb()
   })
   .catch(err => console.error(err));
 
+  const corsOptions = {
+    origin: 'https://exploremate-site.web.app', // Update with your actual frontend URL
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
+
 // User routes (signup/login)
 app.use('/auth', userRoutes);  // Moved this above 404 handler
 
@@ -31,8 +38,9 @@ app.use('/trips', tripRoutes);
 
 // Handle 404 for undefined routes
 app.use((req, res) => {
-  res.status(404).send('404 Not Found');
+  res.status(404).json({ error: '404 Not Found' });
 });
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

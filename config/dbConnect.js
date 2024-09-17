@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 // Establish connection to MongoDB
 const connectToDb = async () => {
     try {
+        // Make sure process.env.DB_URL is being accessed
         await mongoose.connect(process.env.DB_URL);
         console.log('Database Connected');
     } catch (error) {
