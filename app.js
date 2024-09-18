@@ -31,7 +31,7 @@ app.use('/trips', tripRoutes);
 
 // Handle 404 for undefined routes
 app.use((req, res) => {
-  res.status(404).send('404 Not Found');
+  res.status(404).json({ message: '404 Not Found' });
 });
 
 // Error handling middleware
