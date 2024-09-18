@@ -9,28 +9,24 @@ const userRoutes = require('./routes/userRoutes'); // Import user routes
 const app = express();
 
 // Middleware setup
-app.use(cors()); // Enable Cross-Origin Resource Sharing
+app.use(cors({
+  origin: 'https://exploremate-site.web.app', 
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true,
+})); // Enable Cross-Origin Resource Sharing with specific origin
 app.use(express.json()); // Parse incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 app.use(morgan('dev')); // Log HTTP requests
 
-// Connect to MongoDB and start server
+// Connect to MongoDB
 connectToDb()
   .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(`Server running on port ${process.env.PORT || 3000}`);
-    });
+    console.log('Connected to MongoDB');
   })
-  .catch(err => console.error(err));
-
-  app.use(cors({
-    origin: 'https://exploremate-site.web.app', 
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true,
-  }));
+  .catch(err => console.error('Error connecting to DB:', err));
 
 // User routes (signup/login)
-app.use('/auth', userRoutes);  // Moved this above 404 handler
+app.use('/auth', userRoutes);
 
 // Trip routes
 app.use('/trips', tripRoutes);
@@ -39,7 +35,6 @@ app.use('/trips', tripRoutes);
 app.use((req, res) => {
   res.status(404).json({ error: '404 Not Found' });
 });
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
