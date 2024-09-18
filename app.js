@@ -9,31 +9,29 @@ const userRoutes = require('./routes/userRoutes'); // Import user routes
 const app = express();
 
 // Middleware setup
-app.use(cors({
-  origin: 'https://exploremate-site.web.app', 
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true,
-})); // Enable Cross-Origin Resource Sharing with specific origin
+app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(express.json()); // Parse incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
 app.use(morgan('dev')); // Log HTTP requests
 
-// Connect to MongoDB
+// Connect to MongoDB and start server
 connectToDb()
   .then(() => {
-    console.log('Connected to MongoDB');
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`Server running on port ${process.env.PORT || 3000}`);
+    });
   })
-  .catch(err => console.error('Error connecting to DB:', err));
+  .catch(err => console.error(err));
 
 // User routes (signup/login)
-app.use('/auth', userRoutes);
+app.use('/auth', userRoutes);  // Moved this above 404 handler
 
 // Trip routes
 app.use('/trips', tripRoutes);
 
 // Handle 404 for undefined routes
 app.use((req, res) => {
-  res.status(404).json({ error: '404 Not Found' });
+  res.status(404).send('404 Not Found');
 });
 
 // Error handling middleware
