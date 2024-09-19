@@ -26,7 +26,7 @@ const signup = async (req, res) => {
     console.log('User saved successfully');
 
     // Generate JWT token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     console.log('JWT token generated successfully:', token);
 
@@ -40,7 +40,7 @@ const signup = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Signup Error:', error); // Log the exact error
+    console.error('Signup Error:', error);
     res.status(500).json({ message: 'Error signing up', error });
   }
 };
@@ -63,7 +63,7 @@ const login = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     // Return the token and the user's first name
     res.status(200).json({
@@ -75,7 +75,7 @@ const login = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Login Error:', error); // Log the exact error
+    console.error('Login Error:', error);
     res.status(500).json({ message: 'Error logging in', error });
   }
 };

@@ -1,4 +1,3 @@
-// Load environment variables from .env
 require("dotenv").config();
 const mongoose = require('mongoose');
 
@@ -9,7 +8,7 @@ const connectToDb = async () => {
         console.log('Database Connected');
     } catch (error) {
         console.error('DB Connection Error:', error);
-        process.exit(1); // Exit if connection fails
+        process.exit(1); 
     }
 };
 

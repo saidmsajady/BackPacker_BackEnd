@@ -3,9 +3,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const connectToDb = require('./config/dbConnect');
 const tripRoutes = require('./routes/tripRoutes');
-const userRoutes = require('./routes/userRoutes'); // Import user routes
+const userRoutes = require('./routes/userRoutes'); 
 
-// Initialize Express app
 const app = express();
 
 // Middleware setup
@@ -24,7 +23,7 @@ connectToDb()
   .catch(err => console.error(err));
 
 // User routes (signup/login)
-app.use('/auth', userRoutes);  // Moved this above 404 handler
+app.use('/auth', userRoutes); 
 
 // Trip routes
 app.use('/trips', tripRoutes);

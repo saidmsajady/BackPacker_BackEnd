@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-// Define schema for user registration and login
 const userSchema = new Schema({
-  firstName: { // Add firstName field
+  firstName: { 
     type: String,
     required: true,
     trim: true,
   },
-  lastName: { // Add lastName field
+  lastName: { 
     type: String,
     required: true,
     trim: true,
@@ -26,12 +25,12 @@ const userSchema = new Schema({
   }
 }, { timestamps: true });
 
-// Hash password before saving user to the database
+// Hash password Middleware for before saving user to the database
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  console.log('Hashed Password:', this.password); // Add this log
+  console.log('Hashed Password:', this.password); 
   next();
 });
 

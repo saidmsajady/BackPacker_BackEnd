@@ -1,6 +1,6 @@
 const Trip = require('../models/tripModel');
 
-// Get list of all trips, sorted by lastEdited (descending)
+// Get list of all trips, sorted by lastEdited
 const trip_index = async (req, res) => {
     try {
       const trips = await Trip.find({ createdBy: req.user.id }).sort({ lastEdited: -1 }); // Only fetch trips created by the logged-in user
@@ -10,7 +10,6 @@ const trip_index = async (req, res) => {
     }
 };
   
-
 // Get details for a specific trip by ID
 const trip_details = (req, res) => {
     const id = req.params.id;
@@ -58,10 +57,10 @@ const trip_delete = async (req, res) => {
         return res.status(403).json({ message: 'You do not have permission to delete this trip' });
       }
   
-      await Trip.deleteOne({ _id: id }); // Use deleteOne instead of remove
+      await Trip.deleteOne({ _id: id }); 
       res.status(200).json({ message: 'Trip deleted successfully' });
     } catch (error) {
-      console.error('Error deleting trip:', error); // Log the error for debugging
+      console.error('Error deleting trip:', error); 
       res.status(500).json({ message: 'Error deleting trip', error });
     }
 };  
@@ -93,7 +92,6 @@ const trip_update = async (req, res) => {
       res.status(500).json({ message: 'Error updating trip', error });
     }
 };
-  
 
 module.exports = {
     trip_index,
